@@ -12,7 +12,14 @@ public class InsertionSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not Implemented yet!");
+		for (int i = leftIndex; i <= rightIndex; i++){
+			T atual =  array[i];
+			int j = i;
+			while ((j > leftIndex) && array[j - 1].compareTo(atual) > 0){
+				array[j] = array[j - 1];
+				j--;
+			}
+			array[j] = atual;
+		}
 	}
 }
