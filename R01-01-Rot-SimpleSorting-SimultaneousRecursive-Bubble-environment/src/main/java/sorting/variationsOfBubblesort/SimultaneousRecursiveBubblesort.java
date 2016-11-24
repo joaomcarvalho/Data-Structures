@@ -28,11 +28,11 @@ public class SimultaneousRecursiveBubblesort<T extends Comparable<T>> extends Ab
          int j = rightIndex;
     	 
          for (int i = leftIndex; i < rightIndex; i++) {
-        	 if (array[i].compareTo(array[i + 1]) > 0)
-        		 Util.swap(array, i + 1, i);
+        	if (array[i].compareTo(array[i + 1]) > 0)
+        		Util.swap(array, i + 1, i);
             
-            if (array[j].compareTo(array[j - 1]) < 0 && j > 0)
-               Util.swap(array, j, j - 1);
+            if (array[j].compareTo(array[j - 1]) < 0 && j > leftIndex)
+            	Util.swap(array, j, j - 1);
             j--;
          }
          sort(array, leftIndex + 1, rightIndex - 1);
