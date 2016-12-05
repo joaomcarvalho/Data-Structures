@@ -31,7 +31,6 @@ public class ExtendedCountingSort extends AbstractSorting<Integer> {
 				menor = array[i];
 		}
 		
-		
 		int freq[] = new int[maior - menor + 1];
 		
 		for (int i = leftIndex; i <= rightIndex; i++){
