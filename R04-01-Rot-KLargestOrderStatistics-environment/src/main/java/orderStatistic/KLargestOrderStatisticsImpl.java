@@ -4,8 +4,6 @@ import java.util.Arrays;
 
 import util.Util;
 
-// 1 4 6 8 9 12
-
 /**
  * Uma implementacao da interface KLargest que usa estatisticas de ordem para 
  * retornar um array com os k maiores elementos de um conjunto de dados/array.
@@ -34,11 +32,10 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 			return null;
 		if (k > array.length)
 			return null;
-		if (k == array.length)
-			return array;
 		
-		T[] novoArray = (T[]) new Comparable[array.length - (array.length - k)];
-		T estatisticaOrdem = orderStatistics(array, array.length - k);
+		
+		T[] novoArray = (T[]) new Comparable[array.length - k];
+		T estatisticaOrdem = orderStatistics(array,  k);
 		int j = 0;
 		
 		for (int i = 0; i < array.length; i++){
@@ -65,8 +62,9 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 		if (k > array.length || k < 1)
 			return null;
 		
+		k--;
 		int minIndex, j;
-		for (int i = 0; i < k; i++){
+		for (int i = 0; i <= k; i++){
 			minIndex = i;	
 			for (j = i + 1; j < array.length; j++){
 				if (array[j].compareTo(array[minIndex]) < 0){
@@ -76,6 +74,6 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 			if (minIndex != i)
 				Util.swap(array, i, minIndex);
 		}
-		return array[k-1];
+		return array[k];
 	}
 }
