@@ -1,7 +1,5 @@
 package orderStatistic;
 
-import java.util.Arrays;
-
 import util.Util;
 
 /**
@@ -24,56 +22,55 @@ import util.Util;
  *
  * @param <T>
  */
-public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLargest<T>{
+public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLargest<T> {
 
-	@Override
-	public T[] getKLargest(T[] array, int k) {
-		if (array == null)
-			return null;
-		if (k > array.length)
-			return null;
-		
-		
-		T[] novoArray = (T[]) new Comparable[array.length - k];
-		T estatisticaOrdem = orderStatistics(array,  k);
-		int j = 0;
-		
-		for (int i = 0; i < array.length; i++){
-			if (array[i].compareTo(estatisticaOrdem)>0){
-				novoArray[j] = array[i];
-				j++;
-			}
-		}
-		return novoArray;
-	}
+   @Override
+   public T[] getKLargest(T[] array, int k) {
+      if (array == null)
+         return null;
+      if (k > array.length)
+         return null;
 
-	/**
-	 * Metodo que retorna a k-esima estatistica de ordem de um array, usando
-	 * a ideia de algum algoritmo de ordenacao visto em sala. Caso nao exista 
-	 * a k-esima estatistica de ordem, entao retorna null.
-	 * 
-	 * Obs: o valor de k deve ser entre 1 e N.
-	 * 
-	 * @param array
-	 * @param k
-	 * @return
-	 */
-	public T orderStatistics(T[] array, int k){
-		if (k > array.length || k < 1)
-			return null;
-		
-		k--;
-		int minIndex, j;
-		for (int i = 0; i <= k; i++){
-			minIndex = i;	
-			for (j = i + 1; j < array.length; j++){
-				if (array[j].compareTo(array[minIndex]) < 0){
-					minIndex = j;
-				}
-			}
-			if (minIndex != i)
-				Util.swap(array, i, minIndex);
-		}
-		return array[k];
-	}
+      T[] novoArray = (T[]) new Comparable[array.length - k];
+      T estatisticaOrdem = orderStatistics(array, k);
+      int j = 0;
+
+      for (int i = 0; i < array.length; i++) {
+         if (array[i].compareTo(estatisticaOrdem) > 0) {
+            novoArray[j] = array[i];
+            j++;
+         }
+      }
+      return novoArray;
+   }
+
+   /**
+    * Metodo que retorna a k-esima estatistica de ordem de um array, usando
+    * a ideia de algum algoritmo de ordenacao visto em sala. Caso nao exista 
+    * a k-esima estatistica de ordem, entao retorna null.
+    * 
+    * Obs: o valor de k deve ser entre 1 e N.
+    * 
+    * @param array
+    * @param k
+    * @return
+    */
+   public T orderStatistics(T[] array, int k) {
+      if (k > array.length || k < 1)
+         return null;
+
+      k--;
+      int minIndex, j;
+      for (int i = 0; i <= k; i++) {
+         minIndex = i;
+         for (j = i + 1; j < array.length; j++) {
+            if (array[j].compareTo(array[minIndex]) < 0) {
+               minIndex = j;
+            }
+         }
+         if (minIndex != i)
+            Util.swap(array, i, minIndex);
+      }
+      return array[k];
+   }
 }
