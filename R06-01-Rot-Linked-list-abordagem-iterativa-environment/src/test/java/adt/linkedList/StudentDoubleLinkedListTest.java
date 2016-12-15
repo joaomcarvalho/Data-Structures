@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StudentDoubleLinkedListTest extends StudentLinkedListTest {
+public class StudentDoubleLinkedListTest {
 
 	private DoubleLinkedList<Integer> lista1;
 	private DoubleLinkedList<Integer> lista2;
