@@ -18,8 +18,8 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 		
 		if (isEmpty()){
 			DoubleLinkedListNode<T> newHead = new DoubleLinkedListNode<T>(element, new DoubleLinkedListNode<T>(), new DoubleLinkedListNode<T>());
-			this.setHead(newHead);
-			this.setLast(newHead);
+			setHead(newHead);
+			setLast(newHead);
 		}else{
 			DoubleLinkedListNode<T> newHead = new DoubleLinkedListNode<T>(element, getHead(), new DoubleLinkedListNode<T>());
 			getHead().setPrevious(newHead);
