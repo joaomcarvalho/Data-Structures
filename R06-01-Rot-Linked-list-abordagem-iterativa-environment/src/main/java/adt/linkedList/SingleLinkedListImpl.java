@@ -10,13 +10,13 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public boolean isEmpty() {
-		return this.head.isNIL();
+		return getHead().isNIL();
 	}
 
 	@Override
 	public int size() {
 		int size = 0;
-		SingleLinkedListNode<T> aux = head;
+		SingleLinkedListNode<T> aux = getHead();
 		while (!aux.isNIL()) {
 			size++;
 			aux = aux.getNext();
@@ -27,7 +27,7 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 	@Override
 	public T search(T element) {
 		if (!isEmpty()){
-			SingleLinkedListNode<T> aux = head;
+			SingleLinkedListNode<T> aux = getHead();
 			while (!aux.isNIL()){
 				if (aux.getData().equals(element)){
 					return aux.getData();
@@ -41,7 +41,7 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 	@Override
 	public void insert(T element) {
 		if (element != null){
-			SingleLinkedListNode<T> aux = head;
+			SingleLinkedListNode<T> aux = getHead();
 			while (!aux.isNIL()){
 				aux = aux.getNext();
 			}
@@ -53,18 +53,18 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 	@Override
 	public void remove(T element) {
 		if (element != null){
-			if (element.equals(head)){
-				this.head = this.head.getNext();
+			if (element.equals(getHead().getData())){
+				setHead(getHead().getNext());
 			}else{
-				SingleLinkedListNode<T> aux = head;
-				while (!aux.isNIL() && !aux.getData().equals(element)){
+				SingleLinkedListNode<T> aux = getHead();
+				while (!aux.isNIL()){
+					if (aux.getData().equals(element)){
+						SingleLinkedListNode<T> front = aux.getNext();
+						aux.setData(front.getData());
+						aux.setNext(front.getNext());
+						break;
+					}
 					aux = aux.getNext();
-				}
-				
-				if (!aux.isNIL()){
-					SingleLinkedListNode<T> front = aux.getNext();
-					aux.setData(front.getData());
-					aux.setNext(front.getNext());
 				}
 			}
 		}
@@ -73,7 +73,7 @@ public class SingleLinkedListImpl<T> implements LinkedList<T> {
 	@Override
 	public T[] toArray() {
 		T[] array = (T[]) new Object[size()];
-		SingleLinkedListNode<T> aux = head;
+		SingleLinkedListNode<T> aux = getHead();
 		int i = 0;
 		
 		while (!aux.isNIL()){

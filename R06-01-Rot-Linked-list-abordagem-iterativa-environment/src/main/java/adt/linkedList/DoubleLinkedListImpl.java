@@ -8,7 +8,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 	public DoubleLinkedListImpl() {
 		super();
 		setHead(new DoubleLinkedListNode<T>());
-		this.last = getHead();
+		setLast(new DoubleLinkedListNode<T>());
 	}
 		
 	@Override
@@ -17,7 +17,9 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 			return;
 		
 		if (isEmpty()){
-			insert(element);
+			DoubleLinkedListNode<T> newHead = new DoubleLinkedListNode<T>(element, new DoubleLinkedListNode<T>(), new DoubleLinkedListNode<T>());
+			this.setHead(newHead);
+			this.setLast(newHead);
 		}else{
 			DoubleLinkedListNode<T> newHead = new DoubleLinkedListNode<T>(element, getHead(), new DoubleLinkedListNode<T>());
 			getHead().setPrevious(newHead);
@@ -29,13 +31,12 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 	public void removeFirst() {
 		if (isEmpty())
 			return;
+		
 		((DoubleLinkedListNode<T>) getHead().getNext()).setPrevious(new DoubleLinkedListNode<T>());
 		
-		if (this.size() == 1){
-			setLast( (DoubleLinkedListNode<T>) head.getNext());
-		}
-		
-		setHead(head.getNext());
+		if (this.size() == 1)
+			setLast( (DoubleLinkedListNode<T>) getHead().getNext());
+		setHead(getHead().getNext());
 	}
 
 	@Override
@@ -43,12 +44,11 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 		if (isEmpty())
 			return;
 		
-		DoubleLinkedListNode<T> newLast = getLast().getPrevious();
-		newLast.setNext(new DoubleLinkedListNode<T>());
+		getLast().getPrevious().setNext(new DoubleLinkedListNode<T>());
 		if (this.size() == 1){
-			setHead(newLast);
+			setHead(getLast().getPrevious());
 		}
-		setLast(newLast);
+		setLast(getLast().getPrevious());
 	}
 	
 	@Override
@@ -57,9 +57,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 			return;
 		
 		if (isEmpty()){
-			DoubleLinkedListNode<T> newNode = new DoubleLinkedListNode<T>(element, new DoubleLinkedListNode<T>(), new DoubleLinkedListNode<T>());
-			this.setHead(newNode);
-			this.setLast(newNode);
+			insertFirst(element);
 		}else{
 			DoubleLinkedListNode<T> newNode = new DoubleLinkedListNode<T>(element, new DoubleLinkedListNode<T>(), getLast());
 			getLast().setNext(newNode);
@@ -74,11 +72,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 		
 		if (!isEmpty()){
 			if (getHead().getData().equals(element)){
-				((DoubleLinkedListNode<T>) head.getNext()).setPrevious(new DoubleLinkedListNode<T>());
-				if (this.size() == 1)
-					last = (DoubleLinkedListNode<T>) head.getNext();
-				
-				head = head.getNext();
+				removeFirst();
 			}else{
 				DoubleLinkedListNode<T> aux = getHead();
 				
@@ -102,7 +96,7 @@ public class DoubleLinkedListImpl<T> extends SingleLinkedListImpl<T> implements
 	}
 	
 	public DoubleLinkedListNode<T> getLast() {
-		return last;
+		return this.last;
 	}
 
 	public void setHead(DoubleLinkedListNode<T> head){
