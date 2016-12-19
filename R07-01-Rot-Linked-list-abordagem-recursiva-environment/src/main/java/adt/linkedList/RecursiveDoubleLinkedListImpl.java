@@ -18,20 +18,66 @@ public class RecursiveDoubleLinkedListImpl<T> extends
 
 	@Override
 	public void insertFirst(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if(!isEmpty()){
+			RecursiveDoubleLinkedListImpl<T> newNode = new RecursiveDoubleLinkedListImpl<T>(this.getData(), this.getNext(), this);
+			this.setData(element);
+			this.setNext(newNode);
+		}else{
+			this.setData(element);
+			this.setNext(new RecursiveDoubleLinkedListImpl<T>());
+			this.setPrevious(new RecursiveDoubleLinkedListImpl<T>());
+		}
+	}
+	
+	public void insert(T element){
+		if (isEmpty()){
+			this.setData(element);
+			this.setNext(new RecursiveDoubleLinkedListImpl<T>());
+			this.setPrevious(new RecursiveDoubleLinkedListImpl<T>());
+		}else{
+			if (this.getNext().isNil()){
+				this.getNext().setData(element);
+				this.getNext().setNext(new RecursiveDoubleLinkedListImpl<T>());
+				this.getNext().setPrevious(this);
+			}else{
+				this.getNext().insert(element);
+			}
+		}
 	}
 
 	@Override
 	public void removeFirst() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (isEmpty())
+			return;
+		if (this.getNext().isNil()){
+			this.setData(null);
+		}else{
+			this.setData(this.getNext().getData());
+			this.setNext(this.getNext().getNext());
+		}
 	}
 
 	@Override
 	public void removeLast() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (isEmpty())
+			return;
+		
+		if (this.getNext().isNil()){
+			getPrevious().setNext(new RecursiveDoubleLinkedListImpl<T>());
+		}else{
+			this.getNext().removeLast();
+		}
+	}
+	
+	public void remove(T element){
+		if (element == null || isEmpty() || isNil()) return;
+		
+		if (this.getData().equals(element)){
+			this.getPrevious().setNext(this.getNext());
+			this.getNext().setPrevious(this.getPrevious());
+		}else{
+			this.getNext().remove(element);
+		}
 	}
 
 	public RecursiveDoubleLinkedListImpl<T> getPrevious() {
@@ -40,6 +86,10 @@ public class RecursiveDoubleLinkedListImpl<T> extends
 
 	public void setPrevious(RecursiveDoubleLinkedListImpl<T> previous) {
 		this.previous = previous;
+	}
+	
+	public RecursiveDoubleLinkedListImpl<T> getNext(){
+		return (RecursiveDoubleLinkedListImpl<T>) this.next;
 	}
 
 }

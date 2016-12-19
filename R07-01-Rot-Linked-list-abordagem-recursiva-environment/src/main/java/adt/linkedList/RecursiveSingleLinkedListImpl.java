@@ -17,38 +17,82 @@ public class RecursiveSingleLinkedListImpl<T> implements LinkedList<T> {
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return isNil();
+	}
+	
+	public boolean isNil(){
+		return data == null;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (isNil())
+			return 0;
+		return getNext().size() + 1;
 	}
 
 	@Override
 	public T search(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (data == null || isNil()) return null; 
+		
+		if (this.getData().equals(element))
+			return this.getData();
+		return this.getNext().search(element);
 	}
 
 	@Override
 	public void insert(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (element == null) return;
+		
+		if (isNil()){
+			this.setData(element);
+			this.setNext(new RecursiveDoubleLinkedListImpl<>());
+		}else{
+			this.getNext().insert(element);
+		}
 	}
 
 	@Override
 	public void remove(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (element == null || isEmpty()) return;
+		
+		if (this.getData().equals(element)){
+			if (this.getNext().isNil())
+				this.setData(null);
+			else{
+				this.setData(this.getNext().getData());
+				this.setNext(this.getNext().getNext());
+			}
+		}else{
+			remove(element, this.getNext(), this);
+		}
+	}
+	
+	public void remove(T element, RecursiveSingleLinkedListImpl<T> current, RecursiveSingleLinkedListImpl<T> prev){
+		if (current.isNil()) return;
+		
+		if (current.getData().equals(element)){
+			prev.setNext(current.getNext());
+		}else{
+			remove (element, current.getNext(), current);
+		}
 	}
 
 	@Override
 	public T[] toArray() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		T[] array = (T[]) new Object[size()];
+		
+		toArray(array, this, 0);
+		
+		return array;
+	}
+	
+	public void toArray(T[] array, RecursiveSingleLinkedListImpl<T> current, int i){
+		if (current.isNil())
+			return;
+		
+		array[i] = current.getData();
+		toArray(array, current.getNext(), i + 1);
 	}
 
 	public T getData() {
